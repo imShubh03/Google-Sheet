@@ -68,8 +68,8 @@ export default function Spreadsheet() {
         // In a real implementation, we would maintain a dependency graph
         // For simplicity, we'll just re-evaluate all formulas
         Object.keys(data).forEach((r) => {
-            Object.keys(data[r]).forEach((c) => {
-                const cell = data[r][c]
+            Object.keys(data[Number(r)]).forEach((c) => {
+                const cell = data[Number(r)][Number(c)]
                 if (cell.formula) {
                     cell.value = evaluateFormula(cell.formula, data)
                 }
@@ -154,7 +154,7 @@ export default function Spreadsheet() {
 
             // For each row, shift columns right and add new column
             Object.keys(newData).forEach((row) => {
-                const rowData = newData[row]
+                const rowData = newData[Number(row)]
 
                 // Shift columns right
                 for (let col = Object.keys(rowData).length - 1; col >= index; col--) {
@@ -176,7 +176,7 @@ export default function Spreadsheet() {
 
             // For each row, shift columns left
             Object.keys(newData).forEach((row) => {
-                const rowData = newData[row]
+                const rowData = newData[Number(row)]
 
                 // Shift columns left
                 for (let col = index; col < Object.keys(rowData).length - 1; col++) {
@@ -246,7 +246,21 @@ export default function Spreadsheet() {
 
     return (
         <div className="flex flex-col h-screen">
-            <Header />
+            <Header onUndo={function (): void {
+                throw new Error("Function not implemented.")
+            } } onRedo={function (): void {
+                throw new Error("Function not implemented.")
+            } } onCut={function (): void {
+                throw new Error("Function not implemented.")
+            } } onCopy={function (): void {
+                throw new Error("Function not implemented.")
+            } } onPaste={function (): void {
+                throw new Error("Function not implemented.")
+            } } onFind={function (): void {
+                throw new Error("Function not implemented.")
+            } } onFindAndReplace={function (): void {
+                throw new Error("Function not implemented.")
+            } } />
             <Toolbar
                 onApplyStyle={applyStyle}
                 onAddRow={() => activeCell && addRow(activeCell.row)}
