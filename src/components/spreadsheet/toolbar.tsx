@@ -4,14 +4,23 @@ import { useState } from "react"
 import {
     Bold,
     Italic,
+    Underline,
     AlignLeft,
     AlignCenter,
     AlignRight,
-    Plus,
-    Trash2,
+    Minus,
+    Percent,
+    DollarSign,
     ChevronDown,
     Type,
     PaintBucket,
+    Link,
+    MoreHorizontal,
+    Search,
+    Undo,
+    Redo,
+    Printer,
+    Save,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -57,99 +66,64 @@ export default function Toolbar({ onApplyStyle, onAddRow, onDeleteRow, onAddColu
 
     return (
         <div className="flex items-center p-1 border-b bg-white">
-            <div className="flex items-center space-x-1 mr-2">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            File <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>New</DropdownMenuItem>
-                        <DropdownMenuItem>Open</DropdownMenuItem>
-                        <DropdownMenuItem>Save</DropdownMenuItem>
-                        <DropdownMenuItem>Download as CSV</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <div className="flex items-center space-x-1">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Search className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Undo className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Redo className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Printer className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Save className="h-4 w-4" />
+                </Button>
+
+                <div className="h-6 w-px bg-gray-300 mx-1" />
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            Edit <ChevronDown className="ml-1 h-4 w-4" />
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-600">
+                            100% <ChevronDown className="ml-1 h-3 w-3" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>Undo</DropdownMenuItem>
-                        <DropdownMenuItem>Redo</DropdownMenuItem>
-                        <DropdownMenuItem>Cut</DropdownMenuItem>
-                        <DropdownMenuItem>Copy</DropdownMenuItem>
-                        <DropdownMenuItem>Paste</DropdownMenuItem>
+                        <DropdownMenuItem>50%</DropdownMenuItem>
+                        <DropdownMenuItem>75%</DropdownMenuItem>
+                        <DropdownMenuItem>100%</DropdownMenuItem>
+                        <DropdownMenuItem>125%</DropdownMenuItem>
+                        <DropdownMenuItem>150%</DropdownMenuItem>
+                        <DropdownMenuItem>200%</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            View <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Freeze rows</DropdownMenuItem>
-                        <DropdownMenuItem>Freeze columns</DropdownMenuItem>
-                        <DropdownMenuItem>Gridlines</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div className="h-6 w-px bg-gray-300 mx-1" />
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            Insert <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem onClick={onAddRow}>Row</DropdownMenuItem>
-                        <DropdownMenuItem onClick={onAddColumn}>Column</DropdownMenuItem>
-                        <DropdownMenuItem>Chart</DropdownMenuItem>
-                        <DropdownMenuItem>Function</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <DollarSign className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Percent className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Minus className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <span className="text-xs">.00</span>
+                </Button>
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            Format <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Number format</DropdownMenuItem>
-                        <DropdownMenuItem>Conditional formatting</DropdownMenuItem>
-                        <DropdownMenuItem>Alternating colors</DropdownMenuItem>
-                        <DropdownMenuItem>Clear formatting</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2">
-                            Data <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Sort range</DropdownMenuItem>
-                        <DropdownMenuItem>Create filter</DropdownMenuItem>
-                        <DropdownMenuItem>Remove duplicates</DropdownMenuItem>
-                        <DropdownMenuItem>Data validation</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div className="h-6 w-px bg-gray-300 mx-1" />
             </div>
-
-            <div className="h-6 w-px bg-gray-300 mx-2" />
 
             <div className="flex items-center space-x-1">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2 min-w-[100px] justify-between">
-                            {fontFamily} <ChevronDown className="ml-1 h-4 w-4" />
+                        <Button variant="ghost" size="sm" className="h-8 px-2 min-w-[100px] justify-between text-gray-600">
+                            {fontFamily} <ChevronDown className="ml-1 h-3 w-3" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
@@ -169,8 +143,8 @@ export default function Toolbar({ onApplyStyle, onAddRow, onDeleteRow, onAddColu
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 px-2 min-w-[60px] justify-between">
-                            {fontSize} <ChevronDown className="ml-1 h-4 w-4" />
+                        <Button variant="ghost" size="sm" className="h-8 px-2 min-w-[50px] justify-between text-gray-600">
+                            {fontSize} <ChevronDown className="ml-1 h-3 w-3" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
@@ -189,20 +163,38 @@ export default function Toolbar({ onApplyStyle, onAddRow, onDeleteRow, onAddColu
                 </DropdownMenu>
             </div>
 
-            <div className="h-6 w-px bg-gray-300 mx-2" />
+            <div className="h-6 w-px bg-gray-300 mx-1" />
 
             <div className="flex items-center space-x-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onApplyStyle({ fontWeight: "bold" })}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-gray-600"
+                    onClick={() => onApplyStyle({ fontWeight: "bold" })}
+                >
                     <Bold className="h-4 w-4" />
                 </Button>
 
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onApplyStyle({ fontStyle: "italic" })}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-gray-600"
+                    onClick={() => onApplyStyle({ fontStyle: "italic" })}
+                >
                     <Italic className="h-4 w-4" />
+                </Button>
+
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Underline className="h-4 w-4" />
+                </Button>
+
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <Link className="h-4 w-4" />
                 </Button>
 
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
                             <Type className="h-4 w-4" />
                         </Button>
                     </PopoverTrigger>
@@ -222,7 +214,7 @@ export default function Toolbar({ onApplyStyle, onAddRow, onDeleteRow, onAddColu
 
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
                             <PaintBucket className="h-4 w-4" />
                         </Button>
                     </PopoverTrigger>
@@ -241,31 +233,42 @@ export default function Toolbar({ onApplyStyle, onAddRow, onDeleteRow, onAddColu
                 </Popover>
             </div>
 
-            <div className="h-6 w-px bg-gray-300 mx-2" />
+            <div className="h-6 w-px bg-gray-300 mx-1" />
 
             <div className="flex items-center space-x-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onApplyStyle({ textAlign: "left" })}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-gray-600"
+                    onClick={() => onApplyStyle({ textAlign: "left" })}
+                >
                     <AlignLeft className="h-4 w-4" />
                 </Button>
 
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onApplyStyle({ textAlign: "center" })}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-gray-600"
+                    onClick={() => onApplyStyle({ textAlign: "center" })}
+                >
                     <AlignCenter className="h-4 w-4" />
                 </Button>
 
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onApplyStyle({ textAlign: "right" })}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-gray-600"
+                    onClick={() => onApplyStyle({ textAlign: "right" })}
+                >
                     <AlignRight className="h-4 w-4" />
                 </Button>
             </div>
 
-            <div className="h-6 w-px bg-gray-300 mx-2" />
+            <div className="h-6 w-px bg-gray-300 mx-1" />
 
             <div className="flex items-center space-x-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onAddRow}>
-                    <Plus className="h-4 w-4" />
-                </Button>
-
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onDeleteRow}>
-                    <Trash2 className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-600">
+                    <MoreHorizontal className="h-4 w-4" />
                 </Button>
             </div>
         </div>

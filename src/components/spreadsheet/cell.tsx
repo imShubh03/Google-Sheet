@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, memo } from "react"
 import type { CellStyle } from "@/lib/types"
 
 interface CellProps {
@@ -18,7 +18,7 @@ interface CellProps {
     onDragOver: () => void
 }
 
-export default function Cell({
+const Cell = memo(function Cell({
     value,
     formula,
     style,
@@ -111,7 +111,7 @@ export default function Cell({
         border: "1px solid #e0e0e0",
         borderTop: "none",
         borderLeft: "none",
-        outline: isActive ? "2px solid #1a73e8" : "none",
+        outline: isActive ? "2px solid #4285f4" : isSelected ? "1px solid #4285f4" : "none",
         zIndex: isActive ? 2 : 1,
     }
 
@@ -151,5 +151,7 @@ export default function Cell({
             )}
         </div>
     )
-}
+})
+
+export default Cell
 

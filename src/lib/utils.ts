@@ -1,11 +1,6 @@
-import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
-}
-
 import type { SpreadsheetData } from "./types"
+import clsx, { ClassValue } from "clsx"
 
 // Convert column index to letter (0 -> A, 1 -> B, etc.)
 export function getColumnLabel(index: number): string {
@@ -64,79 +59,8 @@ export function initializeSpreadsheet(rows: number, cols: number): SpreadsheetDa
     return data
 }
 
-// Trim whitespace from a string
-export function trim(value: string): string {
-    return value.trim()
-}
-
-// Convert string to uppercase
-export function toUpper(value: string): string {
-    return value.toUpperCase()
-}
-
-// Convert string to lowercase
-export function toLower(value: string): string {
-    return value.toLowerCase()
-}
-
-// Remove duplicate rows from a range
-export function removeDuplicates(
-    data: SpreadsheetData,
-    startRow: number,
-    endRow: number,
-    startCol: number,
-    endCol: number,
-): SpreadsheetData {
-    const newData = { ...data }
-    const seen = new Set()
-
-    for (let row = startRow; row <= endRow; row++) {
-        // Create a string representation of the row for comparison
-        const rowStr = JSON.stringify(
-            Array.from({ length: endCol - startCol + 1 }, (_, i) => data[row][startCol + i]?.value),
-        )
-
-        if (seen.has(rowStr)) {
-            // Delete this row and shift all rows below up
-            for (let r = row; r < Object.keys(data).length - 1; r++) {
-                newData[r] = { ...newData[r + 1] }
-            }
-
-            // Delete the last row
-            delete newData[Object.keys(newData).length - 1]
-
-            // Adjust the end row since we removed a row
-            endRow--
-            row--
-        } else {
-            seen.add(rowStr)
-        }
-    }
-
-    return newData
-}
-
-// Find and replace text in a range
-export function findAndReplace(
-    data: SpreadsheetData,
-    startRow: number,
-    endRow: number,
-    startCol: number,
-    endCol: number,
-    findText: string,
-    replaceText: string,
-): SpreadsheetData {
-    const newData = { ...data }
-
-    for (let row = startRow; row <= endRow; row++) {
-        for (let col = startCol; col <= endCol; col++) {
-            const cell = newData[row][col]
-            if (typeof cell.value === "string" && cell.value.includes(findText)) {
-                cell.value = cell.value.replace(new RegExp(findText, "g"), replaceText)
-            }
-        }
-    }
-
-    return newData
+//This is already defined in cn.ts
+export function cn(...inputs: ClassValue[]): string {
+    return twMerge(clsx(inputs))
 }
 
