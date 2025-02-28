@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Google Sheets Clone
 
-## Getting Started
+A web application that closely mimics Google Sheets, built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+# Screenshots
+![Image1](image.png)
+![Image2](image-1.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Spreadsheet Interface
+- Google Sheets-like UI with toolbar, formula bar, and cell structure
+- Drag functionality for cell content and selections
+- Cell dependencies with formula support
+- Basic cell formatting (bold, italics, font size, color)
+- Add, delete, and resize rows and columns
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Mathematical Functions
+- `SUM`: Calculates the sum of a range of cells
+- `AVERAGE`: Calculates the average of a range of cells
+- `MAX`: Returns the maximum value from a range of cells
+- `MIN`: Returns the minimum value from a range of cells
+- `COUNT`: Counts the number of cells containing numerical values
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Data Quality Functions
+- `TRIM`: Removes leading and trailing whitespace
+- `UPPER`: Converts text to uppercase
+- `LOWER`: Converts text to lowercase
+- `REMOVE_DUPLICATES`: Removes duplicate rows
+- `FIND_AND_REPLACE`: Find and replace text in cells
 
-## Learn More
+### 4. Data Entry and Validation
+- Support for various data types (numbers, text, dates)
+- Data validation with error messages
+- Formula evaluation and cell dependencies
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- **Next.js**: React framework for the application
+- **TypeScript**: Type safety and better developer experience
+- **Tailwind CSS**: Utility-first CSS framework
+- **shadcn/ui**: Reusable UI components
+- **Lucide Icons**: Icon library
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### State Management
+- React's built-in useState and useCallback for local state
+- Custom hooks for spreadsheet operations
 
-## Deploy on Vercel
+### Data Structures
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **SpreadsheetData**
+```typescript
+type SpreadsheetData = Record<number, Record<number, Cell>>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

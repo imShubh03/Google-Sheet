@@ -1,14 +1,25 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect, memo } from "react"
-import type { CellStyle } from "@/lib/types"
+import type { CellStyle, ValidationError } from "@/lib/types"
+import { validateCellValue } from "@/lib/validation"
+import { cn } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface CellProps {
     value: string
     formula: string
     style: CellStyle
+    dataType?: "text" | "number" | "date" | "boolean"
+    validation?: {
+        type: "text" | "number" | "date" | "boolean"
+        required?: boolean
+        min?: number
+        max?: number
+        pattern?: string
+        list?: string[]
+    }
     width: number
     isActive: boolean
     isSelected: boolean
@@ -22,6 +33,8 @@ const Cell = memo(function Cell({
     value,
     formula,
     style,
+    dataType,
+    validation,
     width,
     isActive,
     isSelected,
@@ -32,6 +45,7 @@ const Cell = memo(function Cell({
 }: CellProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState("")
+    const [error, setError] = useState<ValidationError | null>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
     // Start editing when double-clicked
@@ -67,22 +81,29 @@ const Cell = memo(function Cell({
     // Handle input change
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEditValue(e.target.value)
+        const validationResult = validateCellValue(e.target.value, dataType, validation)
+        setError(validationResult.error)
     }
 
     // Handle input blur (finish editing)
     const handleInputBlur = () => {
         setIsEditing(false)
-        onChange(editValue)
+        if (!error || error.type === "warning") {
+            onChange(editValue)
+        }
     }
 
     // Handle key down events
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             setIsEditing(false)
-            onChange(editValue)
+            if (!error || error.type === "warning") {
+                onChange(editValue)
+            }
         } else if (e.key === "Escape") {
             setIsEditing(false)
             setEditValue(formula || value)
+            setError(null)
         }
     }
 
@@ -101,7 +122,7 @@ const Cell = memo(function Cell({
         fontSize: style.fontSize || "11px",
         fontWeight: style.fontWeight || "normal",
         fontStyle: style.fontStyle || "normal",
-        color: style.color || "black",
+        color: error ? "red" : style.color || "black",
         backgroundColor: style.backgroundColor || (isSelected ? "#e8f0fe" : "white"),
         textAlign: style.textAlign || "left",
         overflow: "hidden",
@@ -115,9 +136,9 @@ const Cell = memo(function Cell({
         zIndex: isActive ? 2 : 1,
     }
 
-    return (
+    const content = (
         <div
-            className="relative"
+            className={cn("relative", error && "border-red-500")}
             style={cellStyle}
             onClick={handleClick}
             onDoubleClick={handleDoubleClick}
@@ -127,7 +148,7 @@ const Cell = memo(function Cell({
             {isEditing ? (
                 <input
                     ref={inputRef}
-                    type="text"
+                    type={dataType === "number" ? "number" : "text"}
                     value={editValue}
                     onChange={handleInputChange}
                     onBlur={handleInputBlur}
@@ -150,6 +171,17 @@ const Cell = memo(function Cell({
                 </div>
             )}
         </div>
+    )
+
+    return error ? (
+        <Tooltip>
+            <TooltipTrigger asChild>{content}</TooltipTrigger>
+            <TooltipContent>
+                <p className="text-sm text-red-500">{error.message}</p>
+            </TooltipContent>
+        </Tooltip>
+    ) : (
+        content
     )
 })
 
